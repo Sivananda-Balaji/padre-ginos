@@ -1,21 +1,20 @@
 import { createRoot } from "react-dom/client";
-import Pizza from "./Pizza";
+import Order from "./Order";
+import { StrictMode, useState } from "react";
+import PizzaOfTheDay from "./PizzaOfTheDay";
+import Header from "./Header";
+import { CartContext } from "./contexts";
 
 const App = () => {
+  const cartHook = useState([]);
   return (
-    <div>
-      <h1>Padre Gino's Pizza</h1>
-      <Pizza
-        name="perpperoni"
-        description="Cheese,Pepperoni"
-        image="/public/pizzas/pepperoni.webp"
-      />
-      <Pizza
-        name="Americano"
-        description="hotdogs"
-        image="/public/pizzas/big_meat.webp"
-      />
-    </div>
+    <CartContext.Provider value={cartHook}>
+      <div>
+        <Header />
+        <Order />
+        <PizzaOfTheDay />
+      </div>
+    </CartContext.Provider>
   );
 };
 
@@ -23,4 +22,8 @@ const container = document.getElementById("root");
 
 const root = createRoot(container);
 
-root.render(<App />);
+root.render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+);
