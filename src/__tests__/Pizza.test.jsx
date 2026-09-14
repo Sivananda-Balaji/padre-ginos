@@ -1,0 +1,25 @@
+import { expect, test, afterEach } from "vitest";
+import { render, cleanup } from "@testing-library/react";
+import Pizza from "../Pizza";
+
+afterEach(cleanup);
+
+test("alt test renders on pizza image", () => {
+  const name = "My Favourite Pizza";
+  const description = "cool pizza";
+  const src = "https://picsum.photos/200";
+  const screen = render(
+    <Pizza name={name} description={description} image={src} />,
+  );
+  const img = screen.getByRole("img");
+  expect(img.src).toBe(src);
+  expect(img.alt).toBe(name);
+});
+
+test("to have a default image if none is provided", () => {
+  const name = "My Favourite Pizza";
+  const description = "cool pizza";
+  const screen = render(<Pizza name={name} description={description} />);
+  const img = screen.getByRole("img");
+  expect(img.src).not.toBe("");
+});
